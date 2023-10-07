@@ -1,0 +1,4 @@
+# .gitignore
+
+# Ignore sensitive configuration file
+config.sh
