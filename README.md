@@ -19,3 +19,4 @@ Useful for generating local backups from your SMB/CIFS server.
   - **destination_dir** is where your backup files will be in your system.
 - Run the script in the project folder with the command *./backup-script.sh*
 - You can check the logs in the path provided on your config.sh *log_dir* variable
+- You can also create a SystemD service for this project so the backup is always synced with the server.
