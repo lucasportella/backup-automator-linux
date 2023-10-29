@@ -19,4 +19,12 @@ Useful for generating local backups from your SMB/CIFS server.
   - **destination_dir** is where your backup files will be in your system.
 - Run the script in the project folder with the command *./backup-script.sh*
 - You can check the logs in the path provided on your config.sh *log_dir* variable
-- You can also create a systemd service for this project so the backup is always synced with the server.
+- You can also create a systemd service for this project so the backup is always synced with the server. Heres how:
+  - Create a file with a `.service` extension, for example, `backup-script.service`. You can place it in the `/etc/systemd/system/` directory. Use the available service-example.service in this repo, you just need to change the path of ExecStart and WorkingDirectory. You can use this command: *sudo nano /etc/systemd/system/yourfile.service*;
+  - After saving your service file, reload the systemd manager configuration: *sudo systemctl daemon-reload*;
+  - Start your service with the following command: *sudo systemctl start yourfile.service*
+  - To ensure that your service starts on boot, enable it: *sudo systemctl enable yourfile.service*
+  - From now, everytime your pc boots, it will sync with the cifs server and create/update your backup!
+
+
+Windows and docker versions coming soon...
