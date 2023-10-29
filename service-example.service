@@ -1,0 +1,18 @@
+[Unit]
+Description=My backup Service
+After=network.target
+
+[Service]
+ExecStart=/home/john/path/to/where/script/is/located/backup-script.sh
+WorkingDirectory=/home/john/path/to/where/script/is/located/
+User=john
+Group=john
+Restart=on-failure
+RestartSec=3
+StartLimitInterval=60
+StartLimitBurst=3
+Environment="VAR_NAME=var_value"
+Environment="ANOTHER_VAR=another_value"
+
+[Install]
+WantedBy=multi-user.target

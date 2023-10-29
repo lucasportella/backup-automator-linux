@@ -31,7 +31,7 @@ display_rsync_messages() {
 if [ -d "$shared_dir_source" ]; then
     echo "Source directory already mounted."
 else
-    sudo mount -t cifs "$shared_dir_source" "$shared_dir_mount_target" -o username="$samba_user",password="$samba_password",uid=$(id -u),gid=$(id -g)
+    echo "$system_password" | sudo -S mount -t cifs "$shared_dir_source" "$shared_dir_mount_target" -o username="$samba_user",password="$samba_password",uid=$(id -u),gid=$(id -g)
     if [ $? -eq 0 ]; then
         echo "Source mount successful."
     else
@@ -44,7 +44,7 @@ if [ -d "$destination_dir" ]; then
     if mountpoint -q "$destination_dir"; then
         echo "Destiny directory already mounted."
     else
-        sudo mount "$destination_mount_device_location" "$destination_dir"
+        echo "$system_password" | sudo -S mount "$destination_mount_device_location" "$destination_dir"
         if [ $? -eq 0 ]; then
             echo "Destiny mount successful."
         else
@@ -66,7 +66,7 @@ else
 fi
 
 echo "Unmounting shared directory..."
-sudo umount "$shared_dir_mount_target"
+echo "$system_password" | sudo -S umount "$shared_dir_mount_target"
 echo "Unmounting destination dir..."
-sudo umount "$destination_dir"
+echo "$system_password" | sudo -S umount "$destination_dir"
 
