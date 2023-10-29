@@ -5,8 +5,8 @@ After=network.target
 [Service]
 ExecStart=/home/john/path/to/where/script/is/located/backup-script.sh
 WorkingDirectory=/home/john/path/to/where/script/is/located/
-User=john
-Group=john
+User=root
+Group=root
 Restart=on-failure
 RestartSec=3
 StartLimitInterval=60

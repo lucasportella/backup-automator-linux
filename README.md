@@ -24,7 +24,7 @@ Useful for generating local backups from your SMB/CIFS server.
   - After saving your service file, reload the systemd manager configuration: *sudo systemctl daemon-reload*;
   - Start your service with the following command: *sudo systemctl start yourfile.service*
   - To ensure that your service starts on boot, enable it: *sudo systemctl enable yourfile.service*
-  - From now, everytime your pc boots, it will sync with the cifs server and create/update your backup!
+  - From now, every time your pc boots, it will sync with the cifs server and create/update your backup!
 
 
 Windows and docker versions coming soon...

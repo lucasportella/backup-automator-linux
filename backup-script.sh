@@ -8,9 +8,9 @@ source config.sh
 # Source mount directory
 mkdir -p $shared_dir_mount_target # create the dir where will be mounted the shared network device(which is the source_dir)
 # Destination directory
-mkdir -p "$destination_dir" # use sudo if dir is in root folder
+mkdir -p "$destination_dir"
 # Log directory
-mkdir -p "$log_dir" # use sudo if dir is in root folder
+mkdir -p "$log_dir"
 
 # Timestamp for the log file
 timestamp=$(date +"%Y%m%d%H%M%S")
@@ -31,7 +31,7 @@ display_rsync_messages() {
 if [ -d "$shared_dir_source" ]; then
     echo "Source directory already mounted."
 else
-    echo "$system_password" | sudo -S mount -t cifs "$shared_dir_source" "$shared_dir_mount_target" -o username="$samba_user",password="$samba_password",uid=$(id -u),gid=$(id -g)
+    echo "$system_password" | mount -t cifs "$shared_dir_source" "$shared_dir_mount_target" -o username="$samba_user",password="$samba_password",uid=$(id -u),gid=$(id -g)
     if [ $? -eq 0 ]; then
         echo "Source mount successful."
     else
@@ -44,7 +44,7 @@ if [ -d "$destination_dir" ]; then
     if mountpoint -q "$destination_dir"; then
         echo "Destiny directory already mounted."
     else
-        echo "$system_password" | sudo -S mount "$destination_mount_device_location" "$destination_dir"
+        echo "$system_password" | mount "$destination_mount_device_location" "$destination_dir"
         if [ $? -eq 0 ]; then
             echo "Destiny mount successful."
         else
@@ -66,7 +66,7 @@ else
 fi
 
 echo "Unmounting shared directory..."
-echo "$system_password" | sudo -S umount "$shared_dir_mount_target"
+echo "$system_password" | umount "$shared_dir_mount_target"
 echo "Unmounting destination dir..."
-echo "$system_password" | sudo -S umount "$destination_dir"
+echo "$system_password" | umount "$destination_dir"
 
