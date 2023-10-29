@@ -1,7 +1,8 @@
 # backup-automator
 backup automator for linux computers connected into a local SMB/CIFS server
 
-Useful for generating local backups from your SMB/CIFS server.
+Useful for generating local backups from your SMB/CIFS server. 
+After the first backup is created, it will only update the backup with the cifs server, being must faster than creating a new backup from scratch.
 
 ## Requirements
 - A SMB/CIFS server running in your local network. I used Samba, you can configure it [here](https://ubuntu.com/tutorials/install-and-configure-samba#1-overview)
