@@ -6,16 +6,23 @@ source config.sh
 
 # CREATE DIRECTORIES
 # Source mount directory
+
 mkdir -p $shared_dir_mount_target # create the dir where will be mounted the shared network device(which is the source_dir)
 # Destination directory
-mkdir -p "$destination_dir"
+mkdir -p "$destination_dir" # use sudo if dir is in root folder
+
 # Log directory
-mkdir -p "$log_dir"
+mkdir -p "$log_dir" # use sudo if dir is in root folder
+
+
+#removes old log files
+find "$log_dir" -type f -name "----*" -mtime +30 -exec rm {} \;
+
 
 # Timestamp for the log file
-timestamp=$(date +"%Y%m%d%H%M%S")
+timestamp=$(date +"%Y-%m-%d-%H-%M")
 log_file="$log_dir/rsync_log_$timestamp.txt"
-date_format=$(date +"%d-%m-%Y")
+echo "$log_dir/rsync_log_$timestamp"
 
 
 echo "Variables created."
@@ -31,7 +38,7 @@ display_rsync_messages() {
 if [ -d "$shared_dir_source" ]; then
     echo "Source directory already mounted."
 else
-    echo "$system_password" | mount -t cifs "$shared_dir_source" "$shared_dir_mount_target" -o username="$samba_user",password="$samba_password",uid=$(id -u),gid=$(id -g)
+    mount -t cifs "$shared_dir_source" "$shared_dir_mount_target" -o username="$samba_user",password="$samba_password",uid=$(id -u),gid=$(id -g)
     if [ $? -eq 0 ]; then
         echo "Source mount successful."
     else
@@ -44,7 +51,7 @@ if [ -d "$destination_dir" ]; then
     if mountpoint -q "$destination_dir"; then
         echo "Destiny directory already mounted."
     else
-        echo "$system_password" | mount "$destination_mount_device_location" "$destination_dir"
+        mount "$destination_mount_device_location" "$destination_dir"
         if [ $? -eq 0 ]; then
             echo "Destiny mount successful."
         else
@@ -56,7 +63,7 @@ fi
 
 # Rsync command
 echo "Starting rsync command..."
-rsync -av --delete --progress --info=progress2 "$shared_dir_mount_target" "$destination_dir" > "$log_file" 2>&1
+rsync -av --delete --progress --info=progress1 "$shared_dir_mount_target" "$destination_dir" 2>&1 | tee >(display_rsync_messages)
 
 # Check the rsync exit status
 if [ $? -eq 0 ]; then
@@ -69,4 +76,3 @@ echo "Unmounting shared directory..."
 echo "$system_password" | umount "$shared_dir_mount_target"
 echo "Unmounting destination dir..."
 echo "$system_password" | umount "$destination_dir"
-
