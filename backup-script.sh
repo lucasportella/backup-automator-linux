@@ -4,15 +4,17 @@ echo "Starting backup script..."
 # import variables
 source config.sh
 
-# CREATE DIRECTORIES
 # Source mount directory
-
 mkdir -p $shared_dir_mount_target # create the dir where will be mounted the shared network device(which is the source_dir)
+chown -R "$system_user":"$system_user" "$shared_dir_mount_target"
+
 # Destination directory
-mkdir -p "$destination_dir" # use sudo if dir is in root folder
+mkdir -p "$destination_dir"
+chown -R "$system_user":"$system_user" "$destination_dir"
 
 # Log directory
-mkdir -p "$log_dir" # use sudo if dir is in root folder
+mkdir -p "$log_dir"
+chown -R "$system_user":"$system_user" "$log_dir"
 
 
 #removes old log files
@@ -22,7 +24,6 @@ find "$log_dir" -type f -name "----*" -mtime +30 -exec rm {} \;
 # Timestamp for the log file
 timestamp=$(date +"%Y-%m-%d-%H-%M")
 log_file="$log_dir/rsync_log_$timestamp.txt"
-echo "$log_dir/rsync_log_$timestamp"
 
 
 echo "Variables created."
@@ -65,6 +66,8 @@ fi
 echo "Starting rsync command..."
 rsync -av --delete --progress --info=progress1 "$shared_dir_mount_target" "$destination_dir" 2>&1 | tee >(display_rsync_messages)
 
+chown "$system_user":"$system_user" "$log_file"
+
 # Check the rsync exit status
 if [ $? -eq 0 ]; then
     echo "Rsync completed successfully. Log saved to: $log_file"
@@ -73,6 +76,6 @@ else
 fi
 
 echo "Unmounting shared directory..."
-echo "$system_password" | umount "$shared_dir_mount_target"
+echo umount "$shared_dir_mount_target"
 echo "Unmounting destination dir..."
-echo "$system_password" | umount "$destination_dir"
+echo umount "$destination_dir"
