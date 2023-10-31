@@ -1,6 +1,6 @@
 # Credentials
-export samba_user="john" # not best practise, samba_user should be the same as system_user
 export system_user="mike"
+export samba_user="john" # not best practise, samba_user should be the same as system_user
 export samba_password="password"
 
 export log_dir="/home/$system_user/logs"
