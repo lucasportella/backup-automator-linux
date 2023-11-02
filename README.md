@@ -39,5 +39,7 @@ After the first backup is created, it will only update the backup with the cifs 
   - To ensure that your service starts on boot, enable it: *sudo systemctl enable yourfile.service*
   - From now, every time your pc boots, it will sync with the cifs server and create/update your backup!
 
+**If you don't want to run the script as an automated systemd service, check the *manual* branch in this project. You can also remove the flag *--delete* from the rsync command, so there is no chance the backup gets deleted if you accidentally delete your server directory.**
+
 
 Windows and docker versions coming soon...
