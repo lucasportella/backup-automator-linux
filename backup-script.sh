@@ -76,6 +76,6 @@ else
 fi
 
 echo "Unmounting shared directory..."
-echo umount "$shared_dir_mount_target"
+umount "$shared_dir_mount_target"
 echo "Unmounting destination dir..."
-echo umount "$destination_dir"
+umount "$destination_dir"
