@@ -63,8 +63,9 @@ if [ -d "$destination_dir" ]; then
 fi
 
 # Rsync command
+# You can pass the --delete flag if you want to delete old files from the backup, but if target incorrectly the destination directory, there might be data loss in the backup
 echo "Starting rsync command..."
-rsync -av --delete --progress --info=progress1 "$shared_dir_mount_target" "$destination_dir" 2>&1 | tee >(display_rsync_messages)
+rsync -av --progress --info=progress1 "$shared_dir_mount_target" "$destination_dir" 2>&1 | tee >(display_rsync_messages)
 
 chown "$system_user":"$system_user" "$log_file"
 
