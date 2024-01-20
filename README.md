@@ -13,7 +13,7 @@ After the first backup is created, it will only update the backup with the cifs 
 # How to use
 - Download the project in your Linux computer
   
-- Create your config.sh file base on the config-example.sh (If you want more protection for your samba password you can *chmod 400 config.sh* and change ownership to root with *sudo chown "root":"root" config.sh* or you can encrypt the file with [gpg](https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages))
+- Create your config.sh file based on the config-example.sh (If you want more protection for your samba password you can *chmod 400 config.sh* and change ownership to root with *sudo chown "root":"root" config.sh* or you can encrypt the file with [gpg](https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages))
   
 - Change the config.sh variables to your own.
   - **shared_dir_source** is the network path to connect to your local server. You can find it using the *hostname* command in your server. You might need to provide the user and hostname path to work plus *.local* plus *sharename*, just like in the config-example file.
@@ -40,6 +40,3 @@ After the first backup is created, it will only update the backup with the cifs 
   - From now, every time your pc boots, it will sync with the cifs server and create/update your backup!
 
 **If you don't want to run the script as an automated systemd service, check the *manual* branch in this project.**
-
-
-Windows and docker versions coming soon...
